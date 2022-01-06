@@ -1,5 +1,4 @@
 # github.com/davecgh/go-spew v1.1.1
-## explicit
 github.com/davecgh/go-spew/spew
 # github.com/go-test/deep v1.0.4
 ## explicit
@@ -11,19 +10,16 @@ github.com/gorilla/websocket
 ## explicit
 github.com/pkg/errors
 # github.com/pmezard/go-difflib v1.0.0
-## explicit
 github.com/pmezard/go-difflib/difflib
-# github.com/mldelaro/slack v0.10.1z
+# github.com/mldelaro/slack v0.10.1
 ## explicit
 github.com/mldelaro/slack
 github.com/mldelaro/slack/internal/backoff
 github.com/mldelaro/slack/internal/errorsx
 github.com/mldelaro/slack/internal/misc
 github.com/mldelaro/slack/internal/timex
-github.com/mldelaro/slack/slackevents
 github.com/mldelaro/slack/slacktest
 github.com/mldelaro/slack/slackutilsx
-github.com/mldelaro/slack/socketmode
 # github.com/stretchr/testify v1.2.2
 ## explicit
 github.com/stretchr/testify/assert
