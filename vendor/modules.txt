@@ -13,17 +13,17 @@ github.com/pkg/errors
 # github.com/pmezard/go-difflib v1.0.0
 ## explicit
 github.com/pmezard/go-difflib/difflib
-# github.com/slack-go/slack v0.10.1
+# github.com/mldelaro/slack v0.10.1z
 ## explicit
-github.com/slack-go/slack
-github.com/slack-go/slack/internal/backoff
-github.com/slack-go/slack/internal/errorsx
-github.com/slack-go/slack/internal/misc
-github.com/slack-go/slack/internal/timex
-github.com/slack-go/slack/slackevents
-github.com/slack-go/slack/slacktest
-github.com/slack-go/slack/slackutilsx
-github.com/slack-go/slack/socketmode
+github.com/mldelaro/slack
+github.com/mldelaro/slack/internal/backoff
+github.com/mldelaro/slack/internal/errorsx
+github.com/mldelaro/slack/internal/misc
+github.com/mldelaro/slack/internal/timex
+github.com/mldelaro/slack/slackevents
+github.com/mldelaro/slack/slacktest
+github.com/mldelaro/slack/slackutilsx
+github.com/mldelaro/slack/socketmode
 # github.com/stretchr/testify v1.2.2
 ## explicit
 github.com/stretchr/testify/assert

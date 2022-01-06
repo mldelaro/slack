@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/slack-go/slack/slackevents"
+	"github.com/mldelaro/slack/slackevents"
 
 	"github.com/pkg/errors"
 )

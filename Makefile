@@ -2,7 +2,7 @@
 
 help:
 	@echo ""
-	@echo "Welcome to slack-go/slack make."
+	@echo "Welcome to mldelaro/slack make."
 	@echo "The following commands are available:"
 	@echo ""
 	@echo "    make deps              : Fetch all dependencies"
