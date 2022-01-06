@@ -6,7 +6,6 @@ require (
 	github.com/go-test/deep v1.0.8
 	github.com/gorilla/websocket v1.4.2
 	github.com/pkg/errors v0.9.1
-	github.com/slack-go/slack v0.10.1
 	github.com/stretchr/testify v1.7.0
 )
 
