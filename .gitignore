@@ -1,5 +1,5 @@
 .DS_STORE
-vendor/github.com/slack-go
+vendor
 *.test
 *~
 .idea/
