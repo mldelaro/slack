@@ -53,7 +53,7 @@ type OAuthConfig struct {
 }
 
 type Scopes struct {
-	bot []string `json:"bot,omitempty"`
+	Bot []string `json:"bot,omitempty"`
 }
 
 type EventSubscriptions struct {
