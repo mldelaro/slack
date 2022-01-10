@@ -6,7 +6,7 @@ import (
 	// "net/url"
 )
 
-type exportManifestResponse struct {
+type ExportManifestResponse struct {
 	SlackResponse
 	Manifest *Manifest `json:"manifest"`
 }
@@ -49,7 +49,7 @@ type SlashCommandManifest struct {
 
 type OAuthConfig struct {
 	RedirectUrls []string `json:"redirect_urls,omitempty"`
-	Scopes       Scopes   `json:"scopes,omitempty"`
+	Scopes       *Scopes   `json:"scopes,omitempty"`
 }
 
 type Scopes struct {
@@ -68,13 +68,33 @@ type Settings struct {
 	TokenRotationEnabled bool                `json:"token_rotation_enabled"`
 }
 
+
+// OAuthV2Response ...
+type NewManifestResponse struct {
+	SlackResponse
+	AppId              string        `json:"app_id"`
+	OAuthAuthorizeUrl  string        `json:"oauth_authorize_url"`
+	Credentials        *Credentials  `json:"credentials"`
+}
+
+type Credentials struct {
+	ClientId          string  `json:"client_id"`
+	ClientSecret      string  `json:"client_secret"`
+	VerificationToken string  `json:"verification_token"`
+	SigningSecret     string  `json:"signing_secret"`
+}
+
 func (api *Client) ExportAppManifest(appId string) (*Manifest, error) {
 	return api.ExportAppManifestContext(context.Background(), appId)
 }
 
-// ListEventAuthorizationsContext lists authed users and teams for the given event_context. You must provide an app-level token to the client using OptionAppLevelToken. More info: https://api.slack.com/methods/apps.event.authorizations.list
+func (api *Client) CreateAppManifest(appManifest string) (*NewManifestResponse, error) {
+	return api.CreateAppManifestContext(context.Background(), appManifest)
+}
+
+// ExportAppManifestContext gets the manifest file for a given slack-app-id. You must provide an app-level token to the client using OptionAppLevelToken. More info: https://api.slack.com/methods/apps.event.authorizations.list
 func (api *Client) ExportAppManifestContext(ctx context.Context, appId string) (*Manifest, error) {
-	resp := &exportManifestResponse{}
+	resp := &ExportManifestResponse{}
 
 	request, _ := json.Marshal(map[string]string{
 		"app_id": appId,
@@ -90,6 +110,27 @@ func (api *Client) ExportAppManifestContext(ctx context.Context, appId string) (
 	}
 
 	return resp.Manifest, nil
+}
+
+
+// CreateAppManifestContext creates a new app for a given app-manifest. You must provide an app-level token to the client using OptionAppLevelToken. More info: https://api.slack.com/methods/apps.event.authorizations.list
+func (api *Client) CreateAppManifestContext(ctx context.Context, appManifest string) (*NewManifestResponse, error) {
+	resp := &NewManifestResponse{}
+
+	request, _ := json.Marshal(map[string]string{
+		"manifest": appManifest,
+	})
+
+	err := postJSON(ctx, api.httpclient, api.endpoint+"apps.manifest.create", api.token, request, &resp, api)
+
+	if err != nil {
+		return nil, err
+	}
+	if !resp.Ok {
+		return nil, resp.Err()
+	}
+
+	return resp, nil
 }
 
 /*
