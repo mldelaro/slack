@@ -68,8 +68,6 @@ type Settings struct {
 	TokenRotationEnabled bool                `json:"token_rotation_enabled"`
 }
 
-
-// OAuthV2Response ...
 type NewManifestResponse struct {
 	SlackResponse
 	AppId              string        `json:"app_id"`
@@ -84,12 +82,23 @@ type Credentials struct {
 	SigningSecret     string  `json:"signing_secret"`
 }
 
+type UpdateManifestResponse struct {
+	SlackResponse
+	AppId               string  `json:"app_id"`
+	PermissionsUpdated  bool    `json:"permissions_updated"`
+}
+
+
 func (api *Client) ExportAppManifest(appId string) (*Manifest, error) {
 	return api.ExportAppManifestContext(context.Background(), appId)
 }
 
 func (api *Client) CreateAppManifest(appManifest string) (*NewManifestResponse, error) {
 	return api.CreateAppManifestContext(context.Background(), appManifest)
+}
+
+func (api *Client) UpdateAppManifest(appId string, appManifest string) (*UpdateManifestResponse, error) {
+	return api.UpdateAppManifestContext(context.Background(), appId, appManifest)
 }
 
 func (api *Client) DeleteAppManifest(appId string) (*SlackResponse, error) {
@@ -126,6 +135,27 @@ func (api *Client) CreateAppManifestContext(ctx context.Context, appManifest str
 	})
 
 	err := postJSON(ctx, api.httpclient, api.endpoint+"apps.manifest.create", api.token, request, &resp, api)
+
+	if err != nil {
+		return nil, err
+	}
+	if !resp.Ok {
+		return nil, resp.Err()
+	}
+
+	return resp, nil
+}
+
+// UpdateAppManifestContext updates a given app's manifest. You must provide an app-level token to the client using OptionAppLevelToken. More info: https://api.slack.com/methods/apps.event.authorizations.list
+func (api *Client) UpdateAppManifestContext(ctx context.Context, appId string, appManifest string) (*UpdateManifestResponse, error) {
+	resp := &UpdateManifestResponse{}
+
+	request, _ := json.Marshal(map[string]string{
+		"app_id": appId,
+		"manifest": appManifest,
+	})
+
+	err := postJSON(ctx, api.httpclient, api.endpoint+"apps.manifest.update", api.token, request, &resp, api)
 
 	if err != nil {
 		return nil, err
