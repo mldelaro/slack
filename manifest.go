@@ -92,6 +92,10 @@ func (api *Client) CreateAppManifest(appManifest string) (*NewManifestResponse, 
 	return api.CreateAppManifestContext(context.Background(), appManifest)
 }
 
+func (api *Client) DeleteAppManifest(appId string) (*SlackResponse, error) {
+	return api.DeleteAppManifestContext(context.Background(), appId)
+}
+
 // ExportAppManifestContext gets the manifest file for a given slack-app-id. You must provide an app-level token to the client using OptionAppLevelToken. More info: https://api.slack.com/methods/apps.event.authorizations.list
 func (api *Client) ExportAppManifestContext(ctx context.Context, appId string) (*Manifest, error) {
 	resp := &ExportManifestResponse{}
@@ -133,20 +137,21 @@ func (api *Client) CreateAppManifestContext(ctx context.Context, appManifest str
 	return resp, nil
 }
 
-/*
-func (api *Client) UninstallApp(clientID, clientSecret string) error {
-	values := url.Values{
-		"client_id":     {clientID},
-		"client_secret": {clientSecret},
-	}
+func (api *Client) DeleteAppManifestContext(ctx context.Context, appId string) (*SlackResponse, error) {
+	resp := &SlackResponse{}
 
-	response := SlackResponse{}
+	request, _ := json.Marshal(map[string]string{
+		"app_id": appId,
+	})
 
-	err := api.getMethod(context.Background(), "apps.uninstall", api.token, values, &response)
+	err := postJSON(ctx, api.httpclient, api.endpoint+"apps.manifest.delete", api.token, request, &resp, api)
+
 	if err != nil {
-		return err
+		return nil, err
+	}
+	if !resp.Ok {
+		return nil, resp.Err()
 	}
 
-	return response.Err()
+	return resp, nil
 }
-*/
