@@ -8,7 +8,7 @@ import (
 
 func main() {
 	api := slack.New("TOKEN_HERE")
-	manifest, err := api.ExportAppManifest("A02TDSWCDDE")
+	manifest, err := api.ExportAppManifest("A8UDA7VKN")
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		return

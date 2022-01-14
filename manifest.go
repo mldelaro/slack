@@ -12,16 +12,10 @@ type ExportManifestResponse struct {
 }
 
 type Manifest struct {
-	Metadata           *Metadata           `json:"_metadata"`
 	DisplayInformation *DisplayInformation `json:"display_information"`
 	Features           *Features           `json:"features,omitempty"`
 	OAuthConfig        *OAuthConfig        `json:"oauth_config,omitempty"`
 	Settings           *Settings           `json:"settings"`
-}
-
-type Metadata struct {
-	Majorversion int `json:"major_version"`
-	Minorversion int `json:"minor_version"`
 }
 
 type DisplayInformation struct {
